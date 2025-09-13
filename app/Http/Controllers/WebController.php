@@ -37,8 +37,8 @@ class WebController extends Controller
     {
         return view('web.contacts');
     }
-    public function afterSale()
+    public function projects()
     {
-        return view('web.aftersale');
+        return view('web.projects');
     }
 }

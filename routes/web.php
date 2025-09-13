@@ -24,7 +24,8 @@ Route::get('/certification-and-compliance', [WebController::class, 'certificatio
 Route::get('/why-choose-us', [WebController::class, 'whyChose'])->name('web.whyChose');
 Route::get('/partners-and-clients', [WebController::class, 'partners'])->name('web.partners');
 Route::get('/contacts', [WebController::class, 'contacts'])->name('web.contacts');
-Route::get('/after-sales-support', [WebController::class, 'afterSale'])->name('web.aftersale');
+Route::get('/services', [WebController::class, 'services'])->name('web.services');
+Route::get('/our-projects', [WebController::class, 'projects'])->name('web.projects');
 
 
 
