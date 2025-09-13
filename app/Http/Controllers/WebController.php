@@ -28,4 +28,17 @@ class WebController extends Controller
     {
         return view('web.why-choose');
     }
+
+    public function partners()
+    {
+        return view('web.partners');
+    }
+    public function contacts()
+    {
+        return view('web.contacts');
+    }
+    public function afterSale()
+    {
+        return view('web.aftersale');
+    }
 }

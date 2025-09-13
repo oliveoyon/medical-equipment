@@ -14,14 +14,19 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WebController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', function () {return view('welcome');});
+
+
 Route::get('/home', [WebController::class, 'index'])->name('web.home');
 Route::get('/about-us', [WebController::class, 'aboutUs'])->name('web.about');
 Route::get('/company-profile', [WebController::class, 'profile'])->name('web.profile');
 Route::get('/certification-and-compliance', [WebController::class, 'certification'])->name('web.certification');
 Route::get('/why-choose-us', [WebController::class, 'whyChose'])->name('web.whyChose');
+Route::get('/partners-and-clients', [WebController::class, 'partners'])->name('web.partners');
+Route::get('/contacts', [WebController::class, 'contacts'])->name('web.contacts');
+Route::get('/after-sales-support', [WebController::class, 'afterSale'])->name('web.aftersale');
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

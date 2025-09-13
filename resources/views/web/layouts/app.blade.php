@@ -286,7 +286,7 @@
                             </ul>
                         </div>
                         <ul class="menu_item">
-                            <li><a class="active" href="index.html">Home</a></li>
+                            <li><a class="active" href="{{ route('web.home') }}">Home</a></li>
 
                             <li>
                                 <a href="#">Company <i class="fas fa-chevron-down"></i></a>
@@ -294,8 +294,8 @@
                                     <li><a href="{{ route('web.about') }}">About Us</a></li>
                                     <li><a href="{{ route('web.profile') }}">Company Profile</a></li>
                                     <li><a href="{{ route('web.certification') }}">Certifications & Compliance</a></li>
-                                    <li><a href="why_choose_us.html">Why Choose Us</a></li>
-                                    <li><a href="partners_clients.html">Partners & Clients</a></li>
+                                    <li><a href="{{ route('web.whyChose') }}">Why Choose Us</a></li>
+                                    <li><a href="{{ route('web.partners') }}">Partners & Clients</a></li>
                                 </ul>
                             </li>
 
@@ -341,7 +341,7 @@
                                 </ul>
                             </li>
 
-                            <li><a href="contact_us.html">Contact</a></li>
+                            <li><a href="{{ route('web.contacts') }}">Contact</a></li>
 
                             {{-- <li>
                                 <a href="#">More <i class="fas fa-chevron-down"></i></a>
