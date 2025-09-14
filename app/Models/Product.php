@@ -23,7 +23,11 @@ class Product extends Model
         'status',
     ];
 
-    // Cast JSON fields to array automatically
+    // Cast JSON columns to array
+    protected $casts = [
+        'sizes' => 'array',
+        'colors' => 'array',
+    ];
 
     // Relations
     public function category() {
@@ -44,13 +48,5 @@ class Product extends Model
 
     public function documents() {
         return $this->hasMany(ProductDocument::class);
-    }
-
-    public function sizes() {
-        return $this->belongsToMany(Size::class, 'product_sizes', 'product_id', 'size_id');
-    }
-
-    public function colors() {
-        return $this->belongsToMany(Color::class, 'product_colors', 'product_id', 'color_id');
     }
 }

@@ -1,4 +1,4 @@
-@extends('web.layouts.app')
+ @extends('web.layouts.app1')
 @section('title', 'Contacts')
 @section('content')
     <section class="page_banner" style="background: url(assets/images/page_banner_bg.jpg);">

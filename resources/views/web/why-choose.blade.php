@@ -1,4 +1,4 @@
-@extends('web.layouts.app')
+@extends('web.layouts.app1')
 @section('title', 'Why Choose Us')
 @section('content')
 

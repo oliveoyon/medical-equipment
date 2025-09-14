@@ -1,4 +1,4 @@
-@extends('web.layouts.app')
+ @extends('web.layouts.app1')
 @section('title', 'Our Projects')
 @section('content')
 
@@ -7,8 +7,8 @@
             <div class="row">
                 <div class="col-xl-6">
                     <div class="section_heading_beauty mb_15">
-                        <h5>Trending This Month</h5>
-                        <h3>Trending Products</h3>
+                        <h5>What’s Moving Forward</h5>
+                        <h3>Track our Projects</h3>
                     </div>
                 </div>
             </div>

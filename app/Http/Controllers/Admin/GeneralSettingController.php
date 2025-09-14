@@ -23,6 +23,9 @@ class GeneralSettingController extends Controller
     public function update(Request $request)
     {
         $setting = GeneralSetting::first();
+        if (!$setting) {
+            $setting = GeneralSetting::create([]);
+        }
 
         // Validation
         $request->validate([
@@ -40,18 +43,22 @@ class GeneralSettingController extends Controller
 
         // Handle logo upload
         if ($request->hasFile('logo')) {
-            if ($setting->logo && Storage::exists($setting->logo)) {
-                Storage::delete($setting->logo);
+            // Delete old logo if exists
+            if ($setting->logo && Storage::disk('public')->exists($setting->logo)) {
+                Storage::disk('public')->delete($setting->logo);
             }
-            $setting->logo = $request->file('logo')->store('uploads/settings');
+            // Store new logo in public disk
+            $setting->logo = $request->file('logo')->store('uploads/settings', 'public');
         }
 
         // Handle favicon upload
         if ($request->hasFile('favicon')) {
-            if ($setting->favicon && Storage::exists($setting->favicon)) {
-                Storage::delete($setting->favicon);
+            // Delete old favicon if exists
+            if ($setting->favicon && Storage::disk('public')->exists($setting->favicon)) {
+                Storage::disk('public')->delete($setting->favicon);
             }
-            $setting->favicon = $request->file('favicon')->store('uploads/settings');
+            // Store new favicon in public disk
+            $setting->favicon = $request->file('favicon')->store('uploads/settings', 'public');
         }
 
         // Update other fields
