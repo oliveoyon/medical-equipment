@@ -77,7 +77,7 @@ class WebController extends Controller
 
             // dd($products);
 
-        return view('web.bycategory', compact('products'));
+        return view('web.sub-category', compact('products'));
     }
 
 
