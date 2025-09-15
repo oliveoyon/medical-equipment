@@ -85,7 +85,7 @@
                             <!-- Left: Text -->
                             <div class="text flex-grow-1 pe-3">
                                 <h3>{{ $product->name }}</h3>
-                                <a class="buy_btn" href="">
+                                <a class="buy_btn" href="{{ route('web.detail', $product->slug) }}">
                                     Details <i class="far fa-arrow-up"></i>
                                 </a>
                             </div>
@@ -158,12 +158,12 @@
         </div>
     </section>
     <!--============================
-                                                FEATURES END
-                                            ==============================-->
+                                                    FEATURES END
+                                                ==============================-->
 
     <!--=========================
-                                                ABOUT US PAGE START
-                                            ==========================-->
+                                                    ABOUT US PAGE START
+                                                ==========================-->
     <section class="about_us mt_100">
         <div class="container">
             <div class="row justify-content-between align-items-center">
@@ -260,13 +260,7 @@
             </div>
         </div>
     </section>
-    <!--=========================
-                                                ABOUT US PAGE ENDS
-                                            ==========================-->
-
-    <!--============================
-                                                    FLASH SELL 2 START
-                                                ==============================-->
+ 
     <section class="flash_sell_2 flash_sell mt_95">
         <div class="container">
             <div class="row align-items-center">
@@ -318,9 +312,12 @@
 
                             <!-- Product Text -->
                             <div class="product_text mt-2">
-                                <a class="title" href="shop_details.html">{{ $product->name }}</a>
+                                <a class="title" href="{{ route('web.detail', $product->slug) }}">{{ $product->name }}</a>
                                 <p class="category mb-3">
-                                    {{ $product->category->name ?? 'Uncategorized' }}
+
+                                    <a href="{{ route('shop.by.category', $product->category->slug) }}" class="cat-link">
+                                        {{ $product->category->name ?? 'Uncategorized' }}
+                                    </a>
                                 </p>
 
 
@@ -365,13 +362,13 @@
     </section>
 
     <!--============================
-                                                    FLASH SELL 2 END
-                                                ==============================-->
+                                                        FLASH SELL 2 END
+                                                    ==============================-->
 
 
     <!--============================
-                                                SUBSCRIPTION 2 START
-                                            =============================-->
+                                                    SUBSCRIPTION 2 START
+                                                =============================-->
     <section class="subscription_2 mt_50 xs_mt_60" style="background: url(assets/images/subscribe_2_bg.jpg);">
         <div class="container">
             <div class="row justify-content-center">
@@ -389,7 +386,7 @@
         </div>
     </section>
     <!--============================
-                                                SUBSCRIPTION 2 END
-                                            =============================-->
+                                                    SUBSCRIPTION 2 END
+                                                =============================-->
 
 @endsection

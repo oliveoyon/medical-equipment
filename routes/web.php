@@ -26,10 +26,12 @@ Route::get('/partners-and-clients', [WebController::class, 'partners'])->name('w
 Route::get('/contacts', [WebController::class, 'contacts'])->name('web.contacts');
 Route::get('/services', [WebController::class, 'services'])->name('web.services');
 Route::get('/our-projects', [WebController::class, 'projects'])->name('web.projects');
-Route::get('/category', [WebController::class, 'category'])->name('web.category');
+Route::get('/categories', [WebController::class, 'category'])->name('web.category');
+Route::get('/product-details/{slug}', [WebController::class, 'detail'])->name('web.detail');
+
 
 Route::get('/shop/category/{slug}', [WebController::class, 'byCategory'])->name('shop.by.category');
-Route::get('/sub-category', [WebController::class, 'subCategory'])->name('web.sub-category');
+Route::get('/shop/sub-category/{slug}', [WebController::class, 'bySubCategory'])->name('shop.by.sub-category');
 
 Route::get('/test', [WebController::class, 'test'])->name('web.test');
 

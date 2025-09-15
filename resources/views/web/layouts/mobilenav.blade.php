@@ -48,7 +48,7 @@
                                     @if ($cat->subcategories->count() > 0)
                                         <ul class="inner_menu">
                                             @foreach ($cat->subcategories as $sub)
-                                                <li><a href="shop.html">{{ $sub->name }}</a></li>
+                                                <li><a href="{{ route('shop.by.sub-category', $sub->slug) }}">{{ $sub->name }}</a></li>
                                             @endforeach
                                         </ul>
                                     @endif
@@ -78,7 +78,7 @@
                                 <a href="#">Products</a>
                                 <ul class="inner_menu">
                                     @foreach ($headerCategories as $cat)
-                                        <li><a href="diagnostic_equipment.html">{{ $cat->name }}</a></li>
+                                        <li><a href="{{ route('shop.by.category', $cat->slug) }}">{{ $cat->name }}</a></li>
                                     @endforeach
                                 </ul>
                             </li>

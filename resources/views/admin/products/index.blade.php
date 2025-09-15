@@ -56,8 +56,8 @@
                                 <button class="btn btn-sm btn-transparent btn-edit" data-id="{{ $product->id }}"
                                     data-name="{{ $product->name }}" data-category="{{ $product->category_id }}"
                                     data-subcategory="{{ $product->subcategory_id }}" data-brand="{{ $product->brand_id }}"
-                                    data-model="{{ $product->model }}" data-sizes='@json($product->sizes ? json_decode($product->sizes) : [])'
-                                    data-colors='@json($product->colors ? json_decode($product->colors) : [])'
+                                    data-model="{{ $product->model }}" data-sizes='@json($product->sizes ?? [])'
+                                    data-colors='@json($product->colors ?? [])'
                                     data-description="{{ $product->description }}"
                                     data-specifications="{{ $product->specifications }}">
                                     <i class="fas fa-edit"></i>

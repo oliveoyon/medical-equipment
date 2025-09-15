@@ -36,7 +36,7 @@
                             <a href="#">Products <i class="fas fa-chevron-down"></i></a>
                             <ul class="menu_droapdown">
                                 @foreach ($headerCategories as $cat)
-                                    <li><a href="diagnostic_equipment.html">{{ $cat->name }}</a></li>
+                                    <li><a href="{{ route('shop.by.category', $cat->slug) }}">{{ $cat->name }}</a></li>
                                 @endforeach
                             </ul>
                         </li>

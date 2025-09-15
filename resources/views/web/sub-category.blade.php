@@ -1,16 +1,135 @@
 @extends('web.layouts.app1')
 @section('title', 'About Us')
 @section('content')
+    <style>
+        .category-box {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 16px;
+            max-width: 260px;
+            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+        }
+
+        .category-box .title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #1e293b;
+            /* dark blue-gray */
+        }
+
+        .category-box ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .category-box li {
+            margin-bottom: 6px;
+        }
+
+        /* Category wrapper */
+        .cat-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(59, 130, 246, 0.1);
+            /* soft blue */
+            border-radius: 6px;
+            padding: 10px 12px;
+            cursor: default;
+            transition: background 0.3s;
+        }
+
+        .cat-wrapper:hover {
+            background: rgba(59, 130, 246, 0.2);
+        }
+
+        .cat-wrapper .cat-link {
+            color: #1e40af;
+            /* dark blue */
+            font-weight: 600;
+            text-decoration: none;
+            flex: 1;
+        }
+
+        .cat-wrapper .toggle-arrow {
+            margin-left: 8px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            user-select: none;
+            color: #1e40af;
+        }
+
+        li.open>.cat-wrapper .toggle-arrow {
+            transform: rotate(90deg);
+        }
+
+        /* Subcategories */
+        .category-box ul ul {
+            display: none;
+            margin-top: 6px;
+            margin-left: 12px;
+            /* indent subcategories */
+        }
+
+        li.open>ul {
+            display: block;
+        }
+
+        .category-box ul ul li {
+            margin-bottom: 4px;
+        }
+
+        .category-box ul ul a {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(249, 115, 22, 0.08);
+            /* soft orange */
+            color: #b45309;
+            /* dark orange text */
+            text-decoration: none;
+            font-size: 14px;
+            padding: 8px 10px;
+            border-radius: 6px;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .category-box ul ul a:hover {
+            background: rgba(249, 115, 22, 0.2);
+            color: #9a3412;
+            transform: translateX(2px);
+        }
+
+        /* Active states */
+        li.open>.cat-wrapper,
+        /* active category */
+        .cat-wrapper.active {
+            background: rgba(59, 130, 246, 0.25);
+            color: #1e3a8a;
+        }
+
+        .category-box ul ul a.active {
+            background: rgba(249, 115, 22, 0.25);
+            color: #7c2d12;
+            font-weight: 600;
+        }
+    </style>
     <section class="page_banner" style="background: url({{ asset('assets/images/page_banner_bg.jpg') }});">
         <div class="page_banner_overlay">
             <div class="container">
                 <div class="row">
                     <div class="col-12">
                         <div class="page_banner_text wow fadeInUp">
-                            <h1>Shop</h1>
+                            <h1>{{ $catName ?? ($catName ?? 'Products') }}</h1>
                             <ul>
-                                <li><a href="#"><i class="fal fa-home-lg"></i> Home</a></li>
-                                <li><a href="#">Shop</a></li>
+                                <a href="{{ url('/') }}">
+                                    @if (!empty($subcatName))
+                                        <li><a href="#">{{ $subcatName }}</a></li>
+                                    @endif
+                                </a>
                             </ul>
                         </div>
                     </div>
@@ -27,132 +146,38 @@
                         <div class="shop_filter_btn d-lg-none"> Filter </div>
                         <div class="shop_filter_area">
 
-                            <div class="sidebar_category">
-                                <h3>Categories</h3>
+                            <div class="category-box">
+                                <h3 class="title">Categories</h3>
                                 <ul>
-                                    <li>
-                                        <a href="#">
-                                            Men’s Fashion
-                                            <span>20</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            western wear
-                                            <span>09</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            skin care
-                                            <span>04</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            sport wear
-                                            <span>13</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            fashion jewellery
-                                            <span>36</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            beauty Care
-                                            <span>22</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            Makeoup Tools
-                                            <span>16</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            Winter collention
-                                            <span>27</span>
-                                        </a>
-                                    </li>
-                                    <!-- repeat categories as needed -->
-                                </ul>
-                            </div>
+                                    @foreach ($headerCategories as $cat)
+                                        <li class="{{ isset($catID) && $cat->id == $catID ? 'open' : '' }}">
+                                            <div class="cat-wrapper">
+                                                <!-- Category link -->
+                                                <a href="{{ route('shop.by.category', $cat->slug) }}" class="cat-link">
+                                                    {{ $cat->name }}
+                                                </a>
 
-                            <div class="sidebar_related_product">
-                                <h3>Top Rated Products</h3>
-                                <ul>
-                                    <li>
-                                        <a href="shop_details.html" class="img">
-                                            <img src="{{ asset('assets/images/product_18.png') }}" alt="Product" class="img-fluid">
-                                        </a>
-                                        <div class="text">
-                                            <p class="rating">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star-half-alt"></i>
-                                                <i class="far fa-star"></i>
-                                                <span>(29)</span>
-                                            </p>
-                                            <a class="title" href="shop_details.html">Kid's Western Party Dress</a>
-                                            <p class="price">$59.00</p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href="shop_details.html" class="img">
-                                            <img src="{{ asset('assets/images/product_23.png') }}" alt="Product" class="img-fluid">
-                                        </a>
-                                        <div class="text">
-                                            <p class="rating">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star-half-alt"></i>
-                                                <i class="far fa-star"></i>
-                                                <span>(12)</span>
-                                            </p>
-                                            <a class="title" href="shop_details.html">Kid's dresses for summer</a>
-                                            <p class="price">$54.00</p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href="shop_details.html" class="img">
-                                            <img src="{{ asset('assets/images/product_13.png') }}" alt="Product" class="img-fluid">
-                                        </a>
-                                        <div class="text">
-                                            <p class="rating">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star-half-alt"></i>
-                                                <i class="far fa-star"></i>
-                                                <span>(09)</span>
-                                            </p>
-                                            <a class="title" href="shop_details.html">Sharee Petticoat For Women</a>
-                                            <p class="price">$28.00</p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href="shop_details.html" class="img">
-                                            <img src="{{ asset('assets/images/product_7.png') }}" alt="Product" class="img-fluid">
-                                        </a>
-                                        <div class="text">
-                                            <p class="rating">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star-half-alt"></i>
-                                                <i class="far fa-star"></i>
-                                                <span>(35)</span>
-                                            </p>
-                                            <a class="title" href="shop_details.html">Denim 2 Quarter Pant</a>
-                                            <p class="price">$54.00</p>
-                                        </div>
-                                    </li>
+                                                <!-- Toggle arrow -->
+                                                @if ($cat->subcategories->count() > 0)
+                                                    <span class="toggle-arrow">▶</span>
+                                                @endif
+                                            </div>
+
+                                            @if ($cat->subcategories->count() > 0)
+                                                <ul>
+                                                    @foreach ($cat->subcategories as $sub)
+                                                        <li>
+                                                            <a href="{{ route('shop.by.sub-category', $sub->slug) }}"
+                                                                class="{{ isset($subcatID) && $sub->id == $subcatID ? 'active' : '' }}">
+                                                                {{ $sub->name }}
+                                                                <span>{{ $sub->products_count ?? '' }}</span>
+                                                            </a>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            @endif
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -161,8 +186,8 @@
                 <div class="col-xxl-10 col-lg-8 col-xl-9">
 
                     <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
-                            aria-labelledby="nav-home-tab" tabindex="0">
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"
+                            tabindex="0">
                             <div class="row">
 
                                 @if ($products->isEmpty())
@@ -193,20 +218,23 @@
                                                                     alt="Compare" class="img-fluid"></a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"><img src="{{ asset('assets/images/love_icon_white.svg') }}"
+                                                            <a href="#"><img
+                                                                    src="{{ asset('assets/images/love_icon_white.svg') }}"
                                                                     alt="Love" class="img-fluid"></a>
                                                         </li>
                                                         <li>
-                                                            <a href="#"><img src="{{ asset('assets/images/cart_icon_white.svg') }}"
+                                                            <a href="#"><img
+                                                                    src="{{ asset('assets/images/cart_icon_white.svg') }}"
                                                                     alt="Cart" class="img-fluid"></a>
                                                         </li>
                                                     </ul>
                                                 </div>
 
-                                                <!-- Product Text -->
+                                                <!-- Product Text --> 
+
                                                 <div class="product_text mt-2">
                                                     <a class="title mb-3"
-                                                        href="shop_details.html">{{ $product->name }}</a>
+                                                        href="{{ route('web.detail', $product->slug) }}">{{ $product->name }}</a>
 
                                                     <!-- Sizes -->
                                                     @if (!empty($product->sizes) && is_array($product->sizes))
@@ -244,4 +272,15 @@
             </div>
         </div>
     </section>
+    <script>
+        // Toggle subcategories only when arrow is clicked
+        document.querySelectorAll(".category-box .toggle-arrow").forEach(arrow => {
+            arrow.addEventListener("click", (e) => {
+                const parentLi = arrow.closest("li");
+                parentLi.classList.toggle("open");
+                e.stopPropagation(); // prevent link navigation
+            });
+        });
+    </script>
+
 @endsection

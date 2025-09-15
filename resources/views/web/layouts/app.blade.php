@@ -27,7 +27,7 @@
                                 @if ($cat->subcategories->count() > 0)
                                     <ul class="menu_cat_droapdown">
                                         @foreach ($cat->subcategories as $sub)
-                                            <li><a href="#">{{ $sub->name }}</a></li>
+                                            <li><a href="{{ route('shop.by.sub-category', $sub->slug) }}">{{ $sub->name }}">{{ $sub->name }}</a></li>
                                         @endforeach
                                     </ul>
                                 @endif

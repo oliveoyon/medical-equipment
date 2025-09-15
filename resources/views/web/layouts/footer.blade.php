@@ -71,7 +71,7 @@
                         @endphp
 
                         @foreach ($randomCategories as $cat)
-                            <li><a href="diagnostic_equipment.html">{{ $cat->name }}</a></li>
+                            <li><a href="{{ route('shop.by.category', $cat->slug) }}">{{ $cat->name }}</a></li>
                         @endforeach
 
                     </ul>

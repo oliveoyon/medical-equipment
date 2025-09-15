@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Subcategory;
 use Illuminate\Http\Request;
 
 class WebController extends Controller
@@ -11,8 +12,8 @@ class WebController extends Controller
     public function index()
     {
         $products = Product::with(['category', 'subcategory', 'images']) // eager load images too
-            ->latest()
-            ->take(15)
+            ->inRandomOrder()
+            ->take(25)
             ->get();
         // dd($products);
         return view('web.home', compact('products'));
@@ -68,28 +69,50 @@ class WebController extends Controller
     public function byCategory($slug)
     {
         $category = Category::where('slug', $slug)->firstOrFail();
+        $catID = $category->id;
+        $catName = $category->name;
 
         $products = Product::with(['category', 'subcategory', 'images'])
-            ->where('category_id', $category->id)
-            ->latest()
-            ->take(15)
+            ->where('category_id', $catID)
             ->get();
 
-            // dd($products);
+        // dd($products);
 
-        return view('web.sub-category', compact('products'));
+        return view('web.sub-category', compact('products', 'catID', 'catName'));
     }
 
-
-
-    public function subCategory()
+    public function bySubCategory($slug)
     {
-        $products = Product::with(['category', 'subcategory', 'images']) // eager load images too
-            ->latest()
-            ->take(15)
+        $subcategory = Subcategory::where('slug', $slug)->firstOrFail();
+        $catID = $subcategory->category_id;
+        $category = Category::where('id', $catID)->firstOrFail();
+        $subcatID = $subcategory->id;
+
+        $catName = $category->name;
+        $subcatName = $subcategory->name;
+
+        $products = Product::with(['category', 'subcategory', 'images'])
+            ->where('subcategory_id', $subcatID)
             ->get();
-        // dd($products);
-        return view('web.sub-category', compact('products'));
+
+        // Pass both subcategory and products to the view
+        return view('web.sub-category', compact('products', 'catID', 'subcatID', 'catName', 'subcatName'));
+    }
+
+    public function detail($slug)
+    {
+        $slug = $slug;
+        $product = Product::with(['category', 'subcategory', 'images', 'documents', 'brand'])
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        // Fetch related products (same subcategory)
+        $relatedProducts = Product::with(['category', 'subcategory', 'images', 'documents'])
+            ->where('subcategory_id', $product->subcategory_id) // same subcategory
+            ->where('id', '!=', $product->id) // exclude the current product
+            ->take(10) // limit to 10 related products (adjust as needed)
+            ->get();
+        return view('web.product-details', compact('product', 'relatedProducts'));
     }
 
     public function search(Request $request)
